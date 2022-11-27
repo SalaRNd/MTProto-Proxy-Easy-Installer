@@ -317,7 +317,7 @@ if [ -d "/opt/MTProxy" ]; then
 		esac
 		;;
 	# About
-	11)
+	10)
 		echo "MTProtoInstaller script by SalaRNd"
 		echo "Source at https://github.com/TelegramMessenger/MTProxy"
 		echo "Github repo of script: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
@@ -394,10 +394,10 @@ else
 	echo ""
 	echo ""
 	#Proxy Port
-	read -r -p "یک پورت را برای اختصاص دادن به پروکسی در آن انتخاب کنید (-1 برای تصادفی کردن): " -e -i "443" PORT
+	read -r -p "یک پورت را برای پروکسی انتخاب کنید (عدد یک برای تصادفی کردن): " -e -i "443" PORT
 	if [[ $PORT -eq -1 ]]; then #Check random port
 		GetRandomPort
-		echo "I've selected $PORT as your port."
+		echo "من $PORT را به عنوان پورت شما انتخاب کرده ام."
 	fi
 	if ! [[ $PORT =~ $regex ]]; then #Check if the port is valid
 		echo "$(tput setaf 1)Error:$(tput sgr 0) The input is not a valid number"
@@ -408,24 +408,24 @@ else
 		exit 1
 	fi
 	while true; do
-		echo "Do you want to set secret manually or shall I create a random secret?"
-		echo "   1) Manually enter a secret"
-		echo "   2) Create a random secret"
-		read -r -p "Please select one [1-2]: " -e -i 2 OPTION
+		echo "آیا می خواهید سکرت کد را به صورت دستی تنظیم کنید یا تصادفی ایجاد کنم؟"
+		echo "   1) سکرت کد را به صورت دستی وارد کنید"
+		echo "   2) سکرت کد را تصادفی ایجاد میکنم"
+		read -r -p "لطفاً یکی را انتخاب کنید [1-2]: " -e -i 2 OPTION
 		case $OPTION in
 		1)
-			echo "Enter a 32 character string filled by 0-9 and a-f(hexadecimal): "
+			echo "یک رشته 32 کاراکتری پر شده با 0-9 و a-f (هگزادسیمال) وارد کنید: "
 			read -r SECRET
 			#Validate length
 			SECRET="$(echo $SECRET | tr '[A-Z]' '[a-z]')"
 			if ! [[ $SECRET =~ ^[0-9a-f]{32}$ ]]; then
-				echo "$(tput setaf 1)Error:$(tput sgr 0) Enter hexadecimal characters and secret must be 32 characters."
+				echo "$(tput setaf 1)ارور:$(tput sgr 0) کاراکترهای هگزا دسیمال را وارد کنید و Secret باید 32 کاراکتر باشد."
 				exit 1
 			fi
 			;;
 		2)
 			SECRET="$(hexdump -vn "16" -e ' /1 "%02x"' /dev/urandom)"
-			echo "OK I created one: $SECRET"
+			echo "باشه من یکی درست کردم: $SECRET"
 			;;
 		*)
 			echo "$(tput setaf 1)Invalid option$(tput sgr 0)"
@@ -433,11 +433,11 @@ else
 			;;
 		esac
 		SECRET_ARY+=("$SECRET")
-		read -r -p "Do you want to add another secret?(y/n) " -e -i "n" OPTION
+		read -r -p "آیا می خواهید سکرت کد دیگری اضافه کنید؟ (y/n) " -e -i "n" OPTION
 		case $OPTION in
 		'y' | "Y")
 			if [ "${#SECRET_ARY[@]}" -ge 16 ]; then
-				echo "$(tput setaf 1)Error$(tput sgr 0) You cannot have more than 16 secrets"
+				echo "$(tput setaf 1)Error$(tput sgr 0) شما نمی توانید بیش از 16 سکرت کد داشته باشید"
 				break
 			fi
 			;;
@@ -452,32 +452,32 @@ else
 		esac
 	done
 	#Now setup the tag
-	read -r -p "Do you want to setup the advertising tag?(y/n) " -e -i "n" OPTION
+	read -r -p "آیا می خواهید پروکسی خود را اسپانسری کنید؟ (y/n) " -e -i "n" OPTION
 	if [[ "$OPTION" == "y" || "$OPTION" == "Y" ]]; then
-		echo "$(tput setaf 1)Note:$(tput sgr 0) Joined users and admins won't see the channel at very top."
-		echo "On telegram, go to @MTProxybot Bot and enter this server's IP and $PORT as port. Then as secret enter $SECRET"
-		echo "Bot will give you a string named TAG. Enter it here:"
+		echo "$(tput setaf 1)توجه داشته باشید:$(tput sgr 0) کاربران و مدیران عضو کانال، کانال اسپانسری را در بالای صفحه نمی بینند."
+		echo "در تلگرام به @MTProxybot Bot رفته و IP و $PORT این سرور را به عنوان پورت وارد کنید. سپس به عنوان سکرت کد $SECRET را وارد کنید"
+		echo "ربات رشته ای به نام TAG به شما می دهد. در اینجا واردش کن:"
 		read -r TAG
 	fi
 	#Get CPU Cores
 	CPU_CORES=$(nproc --all)
-	echo "I've detected that your server has $CPU_CORES cores. If you want I can configure proxy to run at all of your cores. This will make the proxy to spawn $CPU_CORES workers. For some reasons, proxy will most likely to fail at more than 16 cores. So please choose a number between 1 and 16."
-	read -r -p "How many workers you want proxy to spawn? " -e -i "$CPU_CORES" CPU_CORES
+	echo "من متوجه شده ام که سرور شما دارای هسته های $CPU_CORES است. اگر بخواهید می توانم پروکسی را برای اجرا در تمام هسته های شما پیکربندی کنم. این باعث می شود که افراد مصتل به پروکسی *1000 $CPU_CORES را ایجاد کند. به دلایلی، پروکسی به احتمال زیاد در بیش از 16 هسته از کار می افتد. پس لطفا عددی بین 1 تا 16 انتخاب کنید."
+	read -r -p "چند تا از سی پی یو های سرورتون رو میخوایید درگیر کنید؟ " -e -i "$CPU_CORES" CPU_CORES
 	if ! [[ $CPU_CORES =~ $regex ]]; then #Check if input is number
-		echo "$(tput setaf 1)Error:$(tput sgr 0) The input is not a valid number"
+		echo "$(tput setaf 1)ارور:$(tput sgr 0) ورودی یک عدد معتبر نیست"
 		exit 1
 	fi
 	if [ "$CPU_CORES" -lt 1 ]; then #Check range of workers
-		echo "$(tput setaf 1)Error:$(tput sgr 0) Enter number more than 1."
+		echo "$(tput setaf 1)ارور:$(tput sgr 0) عدد بیش از 1 را وارد کنید."
 		exit 1
 	fi
 	if [ "$CPU_CORES" -gt 16 ]; then
-		echo "$(tput setaf 3)Warning:$(tput sgr 0) Values more than 16 can cause some problems later. Proceed at your own risk."
+		echo "$(tput setaf 3)اخطار:$(tput sgr 0) مقادیر بیشتر از 16 می توانند بعداً مشکلاتی ایجاد کنند. با مسئولیت خود ادامه دهید."
 	fi
 	#Secret and config updater
-	read -r -p "Do you want to enable the automatic config updater? I will update \"proxy-secret\" and \"proxy-multi.conf\" each day at midnight(12:00 AM). It's recommended to enable this.[y/n] " -e -i "y" ENABLE_UPDATER
+	read -r -p "آیا می خواهید به روز رسانی پیکربندی خودکار را فعال کنید؟ من \"proxy-secret\" و \"proxy-multi.conf\" را هر روز در نیمه شب (12:00 صبح) به روز می کنم. توصیه می کنم این را فعال کنید.[y/n] " -e -i "y" ENABLE_UPDATER
 	#Change host mask
-	read -r -p "Select a host that DPI thinks you are visiting (TLS_DOMAIN). Pass an empty string to disable Fake-TLS. Enabling this option will automaticly disable the 'dd' secrets: " -e -i "www.cloudflare.com" TLS_DOMAIN
+	read -r -p "میزبانی را انتخاب کنید که DPI فکر می کند در حال بازدید از آن هستید (TLS_DOMAIN). برای غیرفعال کردن Fake-TLS یک رشته خالی ارسال کنید. فعال کردن این گزینه به طور خودکار اسرار 'dd' را غیرفعال می کند (پیشنهاد میشود یک دامین وارد کنید): " -e -i "s10.salarnd.com" TLS_DOMAIN
 	#Use nat status for proxies behind NAT
 	#Try to autodetect private ip: https://github.com/angristan/openvpn-install/blob/master/openvpn-install.sh#L230
 	IP=$(ip -4 addr | sed -ne 's|^.* inet \([^/]*\)/.* scope global.*$|\1|p' | head -1)
@@ -485,22 +485,22 @@ else
 	if echo "$IP" | grep -qE '^(10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.|192\.168)'; then
 		HAVE_NAT="y"
 	fi
-	read -r -p "Is your server behind NAT? (You probably need this if you are using AWS)(y/n) " -e -i "$HAVE_NAT" HAVE_NAT
+	read -r -p "آیا سرور شما پشت NAT است؟ (اگر از AWS استفاده می کنید احتمالاً به این نیاز دارید) (y/n) " -e -i "$HAVE_NAT" HAVE_NAT
 	if [[ "$HAVE_NAT" == "y" || "$HAVE_NAT" == "Y" ]]; then
 		PUBLIC_IP="$(curl https://api.ipify.org -sS)"
-		read -r -p "Please enter your public IP: " -e -i "$PUBLIC_IP" PUBLIC_IP
+		read -r -p "لطفا IP عمومی خود را وارد کنید: " -e -i "$PUBLIC_IP" PUBLIC_IP
 		if echo "$IP" | grep -qE '^(10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.|192\.168)'; then
-			echo "I have detected that $IP is your private IP address. Please verify it."
+			echo "من متوجه شده ام که $IP آدرس IP خصوصی شماست. لطفا آن را تأیید کنید."
 		else
 			IP=""
 		fi
-		read -r -p "Please enter your private IP: " -e -i "$IP" PRIVATE_IP
+		read -r -p "لطفا IP خصوصی خود را وارد کنید: " -e -i "$IP" PRIVATE_IP
 	fi
 	#Other arguments
-	echo "If you want to use custom arguments to run the proxy enter them here; Otherwise just press enter."
+	echo "اگر می خواهید از آرگومان های سفارشی برای اجرای پروکسی استفاده کنید، آنها را در اینجا وارد کنید. در غیر این صورت فقط enter را فشار دهید."
 	read -r CUSTOM_ARGS
 	#Install
-	read -n 1 -s -r -p "Press any key to install..."
+	read -n 1 -s -r -p "برای نصب هر کلیدی را فشار دهید..."
 	clear
 fi
 #Now install packages
@@ -556,7 +556,7 @@ if [[ $distro =~ "CentOS" ]]; then
 		if [ "$AUTO" = true ]; then
 			OPTION="y"
 		else
-			read -r -p "Looks like \"firewalld\" is not installed Do you want to install it?(y/n) " -e -i "y" OPTION
+			read -r -p "به نظر می رسد \"firewalld\" نصب نشده است آیا می خواهید آن را نصب کنید؟ (y/n) " -e -i "y" OPTION
 		fi
 		case $OPTION in
 		"y" | "Y")
@@ -581,7 +581,7 @@ elif [[ $distro =~ "Ubuntu" ]]; then
 			OPTION="y"
 		else
 			echo
-			read -r -p "Looks like \"UFW\"(Firewall) is not installed Do you want to install it?(y/n) " -e -i "y" OPTION
+			read -r -p "به نظر می رسد \"UFW\" (فایروال) نصب نشده است آیا می خواهید آن را نصب کنید؟ (y/n) " -e -i "y" OPTION
 		fi
 		case $OPTION in
 		"y" | "Y")
@@ -596,7 +596,7 @@ elif [[ $distro =~ "Ubuntu" ]]; then
 	if ! [ "$(sysctl -n net.ipv4.tcp_congestion_control)" = "bbr" ] && { [[ $(lsb_release -r -s) =~ "20" ]] || [[ $(lsb_release -r -s) =~ "19" ]] || [[ $(lsb_release -r -s) =~ "18" ]]; }; then
 		if [ "$AUTO" != true ]; then
 			echo
-			read -r -p "Do you want to use BBR? BBR might help your proxy run faster.(y/n) " -e -i "y" ENABLE_BBR
+			read -r -p "آیا می خواهید از BBR استفاده کنید؟ BBR ممکن است به پراکسی شما کمک کند سریعتر اجرا شود. (y/n) " -e -i "y" ENABLE_BBR
 		fi
 		case $ENABLE_BBR in
 		"y" | "Y")
