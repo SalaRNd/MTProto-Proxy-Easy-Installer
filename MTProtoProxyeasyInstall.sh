@@ -385,12 +385,12 @@ else
 	#Variables
 	SECRET=""
 	TAG=""
-	echo "Welcome to MTProto-Proxy auto installer!"
-	echo "Created by SalaRNd"
-	echo "I will install mtprotoproxy, the official repository"
-	echo "Source at https://github.com/TelegramMessenger/MTProxy and https://github.com/krepver/MTProxy"
-	echo "Github repo of script: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
-	echo "Now I will gather some info from you..."
+	echo "به نصب کننده آسان MTProto-Proxy خوش آمدید!"
+	echo "ایجاد شده توسط SalaRNd"
+	echo "من mtprotoproxy، مخزن رسمی را نصب خواهم کرد"
+	echo "منبع در https://github.com/TelegramMessenger/MTProxy و https://github.com/krepver/MTProxy"
+	echo "مخزن اسکریپت Github: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
+	echo "حالا اطلاعاتی از شما جمع آوری میکنم..."
 	echo ""
 	echo ""
 	#Proxy Port
