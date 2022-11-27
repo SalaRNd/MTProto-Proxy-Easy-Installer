@@ -58,29 +58,29 @@ regex='^[0-9]+$'
 distro=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
 clear
 if [ -d "/opt/MTProxy" ]; then
-	echo "You have already installed MTProxy! What do you want to do?"
-	echo "  1 ) Show connection links"
-	echo "  2 ) Change TAG"
-	echo "  3 ) Add a secret"
-	echo "  4 ) Revoke a secret"
-	echo "  5 ) Change Worker Numbers"
-	echo "  6 ) Change NAT settings"
-	echo "  7 ) Change Custom Arguments"
-	echo "  8 ) Generate Firewall Rules"
-	echo "  9 ) Uninstall Proxy"
-	echo "  10) About"
-	echo "  *) Exit"
-	read -r -p "Please enter a number: " OPTION
+	echo "شما قبلا MTProxy را نصب کرده اید! میخوای چیکار کنی؟"
+	echo "  1) پیوندهای اتصال را نشان دهید"
+	echo "  2) تگ را تغییر دهید"
+	echo "  3) یک سکرت کد اضافه کنید"
+	echo "  4) یک سرکت کد را باطل کنید"
+	echo "  5) تعداد CPU های درگیر را تغییر دهید"
+	echo "  6) تنظیمات NAT را تغییر دهید"
+	echo "  7) آرگومان های سفارشی را تغییر دهید"
+	echo "  8) قوانین فایروال را ایجاد کنید"
+	echo "  9) پراکسی را حذف کنید"
+	echo "  10) درباره"
+	echo "  *) خروج"
+	read -r -p "لطفا یک عدد وارد کنید: " OPTION
 	source /opt/MTProxy/objs/bin/mtconfig.conf #Load Configs
 	case $OPTION in
 	#Show connections
 	1)
 		clear
-		echo "$(tput setaf 3)Getting your IP address.$(tput sgr 0)"
+		echo "$(tput setaf 3)دریافت آدرس IP شما$(tput sgr 0)"
 		PUBLIC_IP="$(curl https://api.ipify.org -sS)"
 		CURL_EXIT_STATUS=$?
 		if [ $CURL_EXIT_STATUS -ne 0 ]; then
-			PUBLIC_IP="YOUR_IP"
+			PUBLIC_IP="ای پی شما"
 		fi
 		HEX_DOMAIN=$(printf "%s" "$TLS_DOMAIN" | xxd -pu)
 		HEX_DOMAIN="$(echo $HEX_DOMAIN | tr '[A-Z]' '[a-z]')"
@@ -95,9 +95,9 @@ if [ -d "/opt/MTProxy" ]; then
 	#Change TAG
 	2)
 		if [ -z "$TAG" ]; then
-			echo "It looks like your AD TAG is empty. Get the AD TAG at https://t.me/mtproxybot and enter it here:"
+			echo "به نظر می رسد برچسب آگهی شما خالی است. برچسب AD را در https://t.me/mtproxybot دریافت کنید و آن را در اینجا وارد کنید:"
 		else
-			echo "Current tag is $TAG. If you want to remove it, just press enter. Otherwise type the new TAG:"
+			echo "برچسب فعلی $TAG است. اگر می خواهید آن را حذف کنید، کافی است اینتر را فشار دهید. در غیر این صورت تگ جدید را تایپ کنید:"
 		fi
 		read -r TAG
 		cd /etc/systemd/system || exit 2
@@ -113,30 +113,30 @@ if [ -d "/opt/MTProxy" ]; then
 	#Add secret
 	3)
 		if [ "${#SECRET_ARY[@]}" -ge 16 ]; then
-			echo "$(tput setaf 1)Error$(tput sgr 0) You cannot have more than 16 secrets"
+			echo "$(tput setaf 1)ارور$(tput sgr 0) شما نمی توانید بیش از 16 راز داشته باشید"
 			exit 1
 		fi
-		echo "Do you want to set secret manually or shall I create a random secret?"
-		echo "   1) Manually enter a secret"
-		echo "   2) Create a random secret"
-		read -r -p "Please select one [1-2]: " -e -i 2 OPTION
+		echo "آیا می خواهید سکرت کد را به صورت دستی تنظیم کنید یا تصادفی ایجاد کنم؟"
+		echo "   1) سکرت کد را به صورت دستی وارد کنید"
+		echo "   2) سکرت کد را تصادفی ایجاد میکنم"
+		read -r -p "لطفا یکی را انتخاب کنید [1-2]: " -e -i 2 OPTION
 		case $OPTION in
 		1)
-			echo "Enter a 32 character string filled by 0-9 and a-f(hexadecimal): "
+			echo "یک رشته 32 کاراکتری پر شده با 0-9 و a-f (هگزادسیمال) وارد کنید: "
 			read -r SECRET
 			#Validate length
 			SECRET="$(echo $SECRET | tr '[A-Z]' '[a-z]')"
 			if ! [[ $SECRET =~ ^[0-9a-f]{32}$ ]]; then
-				echo "$(tput setaf 1)Error:$(tput sgr 0) Enter hexadecimal characters and secret must be 32 characters."
+				echo "$(tput setaf 1)ارور:$(tput sgr 0) کاراکترهای هگزا دسیمال را وارد کنید و Secret باید 32 کاراکتر باشد."
 				exit 1
 			fi
 			;;
 		2)
 			SECRET="$(hexdump -vn "16" -e ' /1 "%02x"' /dev/urandom)"
-			echo "OK I created one: $SECRET"
+			echo "خوب من یکی درست کردم: $SECRET"
 			;;
 		*)
-			echo "$(tput setaf 1)Invalid option$(tput sgr 0)"
+			echo "$(tput setaf 1)گزینه نامعتبر$(tput sgr 0)"
 			exit 1
 			;;
 		esac
@@ -158,29 +158,29 @@ if [ -d "/opt/MTProxy" ]; then
 			PUBLIC_IP="YOUR_IP"
 		fi
 		echo
-		echo "You can now connect to your server with this secret with this link:"
+		echo "اکنون می توانید با این سکرت کد به این لینک به سرور خود متصل شوید:"
 		echo "tg://proxy?server=$PUBLIC_IP&port=$PORT&secret=dd$SECRET"
 		;;
 	#Revoke Secret
 	4)
 		NUMBER_OF_SECRETS=${#SECRET_ARY[@]}
 		if [ "$NUMBER_OF_SECRETS" -le 1 ]; then
-			echo "Cannot remove the last secret."
+			echo "نمی توان آخرین سکرت کد را حذف کرد."
 			exit 1
 		fi
-		echo "Select a secret to revoke:"
+		echo "یک سکرت کد را برای لغو انتخاب کنید:"
 		COUNTER=1
 		for i in "${SECRET_ARY[@]}"; do
 			echo "  $COUNTER) $i"
 			COUNTER=$((COUNTER + 1))
 		done
-		read -r -p "Select a user by it's index to revoke: " USER_TO_REVOKE
+		read -r -p "یک کاربر را با شاخص آن برای لغو انتخاب کنید: " USER_TO_REVOKE
 		if ! [[ $USER_TO_REVOKE =~ $regex ]]; then
-			echo "$(tput setaf 1)Error:$(tput sgr 0) The input is not a valid number"
+			echo "$(tput setaf 1)ارور:$(tput sgr 0) ورودی یک عدد معتبر نیست"
 			exit 1
 		fi
 		if [ "$USER_TO_REVOKE" -lt 1 ] || [ "$USER_TO_REVOKE" -gt "$NUMBER_OF_SECRETS" ]; then
-			echo "$(tput setaf 1)Error:$(tput sgr 0) Invalid number"
+			echo "$(tput setaf 1)ارور:$(tput sgr 0) عدد نامعتبر"
 			exit 1
 		fi
 		USER_TO_REVOKE1=$((USER_TO_REVOKE - 1))
@@ -199,18 +199,18 @@ if [ -d "/opt/MTProxy" ]; then
 	#Change CPU workers
 	5)
 		CPU_CORES=$(nproc --all)
-		echo "I've detected that your server has $CPU_CORES cores. If you want I can configure proxy to run at all of your cores. This will make the proxy to spawn $CPU_CORES workers. For some reasons, proxy will most likely to fail at more than 16 cores. So please choose a number between 1 and 16."
-		read -r -p "Who many workers you want proxy to spawn? " -e -i "$CPU_CORES" CPU_CORES
+		echo "من متوجه شده ام که سرور شما دارای $CPU_CORES هسته است. اگر بخواهید می توانم پروکسی را برای اجرا در تمام هسته های شما پیکربندی کنم. این باعث می شود تا همزمان تعداد افراد مصتل به پروکسی 10000*$CPU_CORES شود. به دلایلی، پروکسی به احتمال زیاد در بیش از 16 هسته از کار می افتد. پس لطفا عددی بین 1 تا 16 انتخاب کنید."
+		read -r -p "چند تا از سی پی یو های سرورتون رو میخوایید درگیر کنید؟ " -e -i "$CPU_CORES" CPU_CORES
 		if ! [[ $CPU_CORES =~ $regex ]]; then #Check if input is number
-			echo "$(tput setaf 1)Error:$(tput sgr 0) The input is not a valid number"
+			echo "$(tput setaf 1)ارو:$(tput sgr 0) ورودی یک عدد معتبر نیست"
 			exit 1
 		fi
 		if [ "$CPU_CORES" -lt 1 ]; then #Check range of workers
-			echo "$(tput setaf 1)Error:$(tput sgr 0) Enter number more than 1."
+			echo "$(tput setaf 1)ارو:$(tput sgr 0) عدد بیش از 1 را وارد کنید."
 			exit 1
 		fi
 		if [ "$CPU_CORES" -gt 16 ]; then
-			echo "(tput setaf 3)Warning:$(tput sgr 0) Values more than 16 can cause some problems later. Proceed at your own risk."
+			echo "(tput setaf 3)اخطار:$(tput sgr 0) مقادیر بیشتر از 16 می توانند بعداً مشکلاتی ایجاد کنند. با مسئولیت خود ادامه دهید."
 		fi
 		#Save
 		cd /etc/systemd/system || exit 2
@@ -231,16 +231,16 @@ if [ -d "/opt/MTProxy" ]; then
 		if echo "$IP" | grep -qE '^(10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.|192\.168)'; then
 			HAVE_NAT="y"
 		fi
-		read -r -p "Is your server behind NAT? (You probably need this if you are using AWS)(y/n) " -e -i "$HAVE_NAT" HAVE_NAT
+		read -r -p "آیا شما به NAT نیاز دارید؟ (اگر از AWS استفاده می کنید احتمالا به این نیاز دارید) (y/n) " -e -i "$HAVE_NAT" HAVE_NAT
 		if [[ "$HAVE_NAT" == "y" || "$HAVE_NAT" == "Y" ]]; then
 			PUBLIC_IP="$(curl https://api.ipify.org -sS)"
-			read -r -p "Please enter your public IP: " -e -i "$PUBLIC_IP" PUBLIC_IP
+			read -r -p "لطفا IP عمومی خود را وارد کنید: " -e -i "$PUBLIC_IP" PUBLIC_IP
 			if echo "$IP" | grep -qE '^(10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.|192\.168)'; then
-				echo "I have detected that $IP is your private IP address. Please verify it."
+				echo "من متوجه شده ام که $IP آدرس IP خصوصی شماست. لطفا آن را تأیید کنید."
 			else
 				IP=""
 			fi
-			read -r -p "Please enter your private IP: " -e -i "$IP" PRIVATE_IP
+			read -r -p "لطفا IP خصوصی خود را وارد کنید: " -e -i "$IP" PRIVATE_IP
 		fi
 		cd /opt/MTProxy/objs/bin/ || exit 2
 		sed -i "s/^HAVE_NAT=.*/HAVE_NAT=\"$HAVE_NAT\"/" mtconfig.conf
@@ -250,7 +250,7 @@ if [ -d "/opt/MTProxy" ]; then
 		;;
 	#Change other args
 	7)
-		echo "If you want to use custom arguments to run the proxy enter them here; Otherwise just press enter."
+		echo "اگر می خواهید از آرگومان های سفارشی برای اجرای پروکسی استفاده کنید، آنها را در اینجا وارد کنید. در غیر این صورت فقط enter را فشار دهید."
 		read -r -e -i "$CUSTOM_ARGS" CUSTOM_ARGS
 		#Save
 		cd /etc/systemd/system || exit 2
@@ -274,7 +274,7 @@ if [ -d "/opt/MTProxy" ]; then
 			echo "iptables -A INPUT -p tcp --dport $PORT --jump ACCEPT"
 			echo "iptables-save > /etc/iptables/rules.v4"
 		fi
-		read -r -p "Do you want to apply these rules?[y/n] " -e -i "y" OPTION
+		read -r -p "آیا می‌خواهید این قوانین را اعمال کنید؟[y/n] " -e -i "y" OPTION
 		if [ "$OPTION" == "y" ] || [ "$OPTION" == "Y" ]; then
 			if [[ $distro =~ "CentOS" ]]; then
 				firewall-cmd --zone=public --add-port="$PORT"/tcp
@@ -289,7 +289,7 @@ if [ -d "/opt/MTProxy" ]; then
 		;;
 	#Uninstall proxy
 	9)
-		read -r -p "I still keep some packages like \"Development Tools\". Do want to uninstall MTProto-Proxy?(y/n) " OPTION
+		read -r -p "من هنوز برخی از بسته‌ها مانند \"Development Tools\" را نگه می‌دارم. آیا می خواهید MTProto-Proxy را حذف نصب کنید؟(y/n) " OPTION
 		case $OPTION in
 		"y" | "Y")
 			cd /opt/MTProxy || exit 2
@@ -312,15 +312,15 @@ if [ -d "/opt/MTProxy" ]; then
 			elif [[ $distro =~ "Ubuntu" ]] || [[ $distro =~ "Debian" ]]; then
 				systemctl restart cron
 			fi
-			echo "Ok it's done."
+			echo "باشه تموم شد"
 			;;
 		esac
 		;;
 	# About
 	10)
-		echo "MTProtoInstaller script by SalaRNd"
-		echo "Source at https://github.com/TelegramMessenger/MTProxy"
-		echo "Github repo of script: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
+		echo "اسکریپت MTProtoInstaller توسط SalaRNd"
+		echo "منبع در https://github.com/TelegramMessenger/MTProxy"
+		echo "مخزن اسکریپت Github: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
 		;;
 	esac
 	exit
@@ -345,26 +345,26 @@ if [ "$#" -ge 2 ]; then
 	done
 	#Check secret
 	if [[ ${#SECRET_ARY[@]} -eq 0 ]];then
-		echo "$(tput setaf 1)Error:$(tput sgr 0) Please enter at least one secret"
+		echo "$(tput setaf 1)ارور:$(tput sgr 0) لطفا حداقل یک سکرت کد را وارد کنید"
 		exit 1
 	fi
 	for i in "${SECRET_ARY[@]}"; do
 		if ! [[ $i =~ ^[0-9a-f]{32}$ ]]; then
-			echo "$(tput setaf 1)Error:$(tput sgr 0) Enter hexadecimal characters and secret must be 32 characters. Error on secret $i"
+			echo "$(tput setaf 1)ارور:$(tput sgr 0) کاراکترهای هگزا دسیمال را وارد کنید و Secret باید 32 کاراکتر باشد. خطا در راز $i"
 			exit 1
 		fi
 	done
 	#Check port
 	if [ -z ${PORT+x} ]; then #Check random port
 		GetRandomPort
-		echo "I've selected $PORT as your port."
+		echo "من $PORT را به عنوان پورت شما انتخاب کرده ام."
 	fi
 	if ! [[ $PORT =~ $regex ]]; then #Check if the port is valid
-		echo "$(tput setaf 1)Error:$(tput sgr 0) The input is not a valid number"
+		echo "$(tput setaf 1)ارور:$(tput sgr 0) ورودی یک عدد معتبر نیست"
 		exit 1
 	fi
 	if [ "$PORT" -gt 65535 ]; then
-		echo "$(tput setaf 1)Error:$(tput sgr 0): Number must be less than 65536"
+		echo "$(tput setaf 1)ارور:$(tput sgr 0): تعداد باید کمتر از 65536 باشد"
 		exit 1
 	fi
 	#Check NAT
@@ -428,7 +428,7 @@ else
 			echo "باشه من یکی درست کردم: $SECRET"
 			;;
 		*)
-			echo "$(tput setaf 1)Invalid option$(tput sgr 0)"
+			echo "$(tput setaf 1)گزینه نامعتبر$(tput sgr 0)"
 			exit 1
 			;;
 		esac
@@ -446,7 +446,7 @@ else
 			break
 			;;
 		*)
-			echo "$(tput setaf 1)Invalid option$(tput sgr 0)"
+			echo "$(tput setaf 1)گزینه نامعتبر$(tput sgr 0)"
 			exit 1
 			;;
 		esac
