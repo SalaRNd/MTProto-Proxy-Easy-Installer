@@ -461,7 +461,7 @@ else
 	fi
 	#Get CPU Cores
 	CPU_CORES=$(nproc --all)
-	echo "من متوجه شده ام که سرور شما دارای $CPU_CORES هسته است. اگر بخواهید می توانم پروکسی را برای اجرا در تمام هسته های شما پیکربندی کنم. این باعث می شود که افراد مصتل به پروکسی *1000 $CPU_CORES را ایجاد کند. به دلایلی، پروکسی به احتمال زیاد در بیش از 16 هسته از کار می افتد. پس لطفا عددی بین 1 تا 16 انتخاب کنید."
+	echo "من متوجه شده ام که سرور شما دارای $CPU_CORES هسته است. اگر بخواهید می توانم پروکسی را برای اجرا در تمام هسته های شما پیکربندی کنم. این باعث می شود تا همزمان تعداد افراد مصتل به پروکسی 10000*$CPU_CORES شود. به دلایلی، پروکسی به احتمال زیاد در بیش از 16 هسته از کار می افتد. پس لطفا عددی بین 1 تا 16 انتخاب کنید."
 	read -r -p "چند تا از سی پی یو های سرورتون رو میخوایید درگیر کنید؟ " -e -i "$CPU_CORES" CPU_CORES
 	if ! [[ $CPU_CORES =~ $regex ]]; then #Check if input is number
 		echo "$(tput setaf 1)ارور:$(tput sgr 0) ورودی یک عدد معتبر نیست"
@@ -477,7 +477,7 @@ else
 	#Secret and config updater
 	read -r -p "آیا می خواهید به روز رسانی پیکربندی خودکار را فعال کنید؟ من \"proxy-secret\" و \"proxy-multi.conf\" را هر روز در نیمه شب (12:00 صبح) به روز می کنم. توصیه می کنم این را فعال کنید.[y/n] " -e -i "y" ENABLE_UPDATER
 	#Change host mask
-	read -r -p "میزبانی را انتخاب کنید که DPI فکر می کند در حال بازدید از آن هستید (TLS_DOMAIN). برای غیرفعال کردن Fake-TLS یک رشته خالی ارسال کنید. فعال کردن این گزینه به طور خودکار اسرار 'dd' را غیرفعال می کند (پیشنهاد میشود یک دامین وارد کنید): " -e -i "s10.salarnd.com" TLS_DOMAIN
+	read -r -p "آدرس را انتخاب کنید که فکر می کند در حال بازدید از آن هستید. برای غیرفعال کردن Fake-TLS یک رشته خالی ارسال کنید. فعال کردن این گزینه به طور خودکار اسرار 'dd' را غیرفعال می کند (توصیه میشود یک URL دلخواه وارد کنید): " -e -i "s10.salarnd.com" TLS_DOMAIN
 	#Use nat status for proxies behind NAT
 	#Try to autodetect private ip: https://github.com/angristan/openvpn-install/blob/master/openvpn-install.sh#L230
 	IP=$(ip -4 addr | sed -ne 's|^.* inet \([^/]*\)/.* scope global.*$|\1|p' | head -1)
@@ -485,7 +485,7 @@ else
 	if echo "$IP" | grep -qE '^(10\.|172\.1[6789]\.|172\.2[0-9]\.|172\.3[01]\.|192\.168)'; then
 		HAVE_NAT="y"
 	fi
-	read -r -p "آیا سرور شما پشت NAT است؟ (اگر از AWS استفاده می کنید احتمالاً به این نیاز دارید) (y/n) " -e -i "$HAVE_NAT" HAVE_NAT
+	read -r -p "آیا شما به NAT نیاز دارید؟ (اگر از AWS استفاده می کنید احتمالا به این نیاز دارید) (y/n) " -e -i "$HAVE_NAT" HAVE_NAT
 	if [[ "$HAVE_NAT" == "y" || "$HAVE_NAT" == "Y" ]]; then
 		PUBLIC_IP="$(curl https://api.ipify.org -sS)"
 		read -r -p "لطفا IP عمومی خود را وارد کنید: " -e -i "$PUBLIC_IP" PUBLIC_IP
