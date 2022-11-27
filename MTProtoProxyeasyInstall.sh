@@ -318,7 +318,7 @@ if [ -d "/opt/MTProxy" ]; then
 		;;
 	# About
 	10)
-		echo "اسکریپت MTProtoInstaller توسط SalaRNd"
+		echo "اسکریپت MTProto Proxy Easy Installer ساخته شده توسط SalaRNd"
 		echo "منبع در https://github.com/TelegramMessenger/MTProxy"
 		echo "مخزن اسکریپت Github: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
 		;;
