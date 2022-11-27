@@ -320,7 +320,7 @@ if [ -d "/opt/MTProxy" ]; then
 	11)
 		echo "MTProtoInstaller script by SalaRNd"
 		echo "Source at https://github.com/TelegramMessenger/MTProxy"
-		echo "Github repo of script: https://github.com/HirbodBehnam/MTProtoProxyInstaller"
+		echo "Github repo of script: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
 		;;
 	esac
 	exit
@@ -389,7 +389,7 @@ else
 	echo "Created by SalaRNd"
 	echo "I will install mtprotoproxy, the official repository"
 	echo "Source at https://github.com/TelegramMessenger/MTProxy and https://github.com/krepver/MTProxy"
-	echo "Github repo of script: https://github.com/HirbodBehnam/MTProtoProxyInstaller"
+	echo "Github repo of script: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
 	echo "Now I will gather some info from you..."
 	echo ""
 	echo ""
