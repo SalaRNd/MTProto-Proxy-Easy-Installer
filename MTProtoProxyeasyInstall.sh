@@ -394,7 +394,7 @@ else
 	echo ""
 	echo ""
 	#Proxy Port
-	read -r -p "Select a port to proxy listen on it (-1 to randomize): " -e -i "443" PORT
+	read -r -p "یک پورت را برای اختصاص دادن به پروکسی در آن انتخاب کنید (-1 برای تصادفی کردن): " -e -i "443" PORT
 	if [[ $PORT -eq -1 ]]; then #Check random port
 		GetRandomPort
 		echo "I've selected $PORT as your port."
