@@ -387,7 +387,7 @@ else
 	TAG=""
 	echo "به نصب کننده آسان MTProto-Proxy خوش آمدید!"
 	echo "فارسی سازی شده و ساده سازی شده توسط SalaRNd"
-	echo "من mtprotoproxy، مخزن رسمی را نصب خواهم کرد"
+	echo "من mtprotoproxy، را از مخزن رسمی نصب خواهم کرد"
 	echo "منبع در https://github.com/TelegramMessenger/MTProxy و https://github.com/krepver/MTProxy"
 	echo "مخزن اسکریپت Github: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
 	echo "حالا اطلاعاتی از شما جمع آوری میکنم..."
