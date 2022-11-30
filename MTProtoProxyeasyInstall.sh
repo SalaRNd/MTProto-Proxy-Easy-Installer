@@ -151,7 +151,7 @@ if [ -d "/opt/MTProxy" ]; then
 		cd /opt/MTProxy/objs/bin/ || exit 2
 		SECRET_ARY_STR=${SECRET_ARY[*]}
 		sed -i "s/^SECRET_ARY=.*/SECRET_ARY=($SECRET_ARY_STR)/" mtconfig.conf
-		echo "Done"
+		echo "انجام شد:)"
 		PUBLIC_IP="$(curl https://api.ipify.org -sS)"
 		CURL_EXIT_STATUS=$?
 		if [ $CURL_EXIT_STATUS -ne 0 ]; then
@@ -194,7 +194,7 @@ if [ -d "/opt/MTProxy" ]; then
 		cd /opt/MTProxy/objs/bin/ || exit 2 || exit 2
 		SECRET_ARY_STR=${SECRET_ARY[*]}
 		sed -i "s/^SECRET_ARY=.*/SECRET_ARY=($SECRET_ARY_STR)/" mtconfig.conf
-		echo "Done"
+		echo "انجام شد:)"
 		;;	
 	#Change CPU workers
 	5)
@@ -221,7 +221,7 @@ if [ -d "/opt/MTProxy" ]; then
 		systemctl start MTProxy
 		cd /opt/MTProxy/objs/bin/ || exit 2
 		sed -i "s/^CPU_CORES=.*/CPU_CORES=$CPU_CORES/" mtconfig.conf
-		echo "Done"
+		echo "انجام شد:)"
 		;;
 	#Change NAT types
 	6)
@@ -246,7 +246,7 @@ if [ -d "/opt/MTProxy" ]; then
 		sed -i "s/^HAVE_NAT=.*/HAVE_NAT=\"$HAVE_NAT\"/" mtconfig.conf
 		sed -i "s/^PUBLIC_IP=.*/PUBLIC_IP=\"$PUBLIC_IP\"/" mtconfig.conf
 		sed -i "s/^PRIVATE_IP=.*/PRIVATE_IP=\"$PRIVATE_IP\"/" mtconfig.conf
-		echo "Done"
+		echo "انجام شد:)"
 		;;
 	#Change other args
 	7)
@@ -261,7 +261,7 @@ if [ -d "/opt/MTProxy" ]; then
 		systemctl start MTProxy
 		cd /opt/MTProxy/objs/bin/ || exit 2
 		sed -i "s/^CUSTOM_ARGS=.*/CUSTOM_ARGS=\"$CUSTOM_ARGS\"/" mtconfig.conf
-		echo "Done"
+		echo "انجام شد:)"
 		;;
 	#Firewall rules
 	8)
