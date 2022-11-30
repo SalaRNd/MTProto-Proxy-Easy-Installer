@@ -108,7 +108,7 @@ if [ -d "/opt/MTProxy" ]; then
 		systemctl start MTProxy
 		cd /opt/MTProxy/objs/bin/ || exit 2
 		sed -i "s/^TAG=.*/TAG=\"$TAG\"/" mtconfig.conf
-		echo "Done"
+		echo "انجام شد:)"
 		;;
 	#Add secret
 	3)
