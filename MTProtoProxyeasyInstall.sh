@@ -95,9 +95,9 @@ if [ -d "/opt/MTProxy" ]; then
 	#Change TAG
 	2)
 		if [ -z "$TAG" ]; then
-			echo "به نظر می رسد برچسب آگهی شما خالی است. برچسب AD را در https://t.me/mtproxybot دریافت کنید و آن را در اینجا وارد کنید:"
+			echo "به نظر می رسد برای پروکسی خود کد تگی انتخاب نکردید. کد تگ را از ربات https://t.me/mtproxybot دریافت کنید و آن را در اینجا وارد کنید:"
 		else
-			echo "برچسب فعلی $TAG است. اگر می خواهید آن را حذف کنید، کافی است اینتر را فشار دهید. در غیر این صورت تگ جدید را تایپ کنید:"
+			echo "کد تگ پروکسی فعلی شما $TAG است. اگر می خواهید آن را حذف کنید، کافی است اینتر را فشار دهید. در غیر این صورت تگ جدید را تایپ کنید:"
 		fi
 		read -r TAG
 		cd /etc/systemd/system || exit 2
@@ -394,23 +394,23 @@ else
 	echo ""
 	echo ""
 	#Proxy Port
-	read -r -p "یک پورت را برای پروکسی انتخاب کنید (عدد یک برای تصادفی کردن): " -e -i "443" PORT
+	read -r -p "یک پورت را برای پروکسی انتخاب کنید (عدد یک برای تصادفی کردن): " -e -i "1" PORT
 	if [[ $PORT -eq -1 ]]; then #Check random port
 		GetRandomPort
 		echo "من $PORT را به عنوان پورت شما انتخاب کرده ام."
 	fi
 	if ! [[ $PORT =~ $regex ]]; then #Check if the port is valid
-		echo "$(tput setaf 1)Error:$(tput sgr 0) The input is not a valid number"
+		echo "$(tput setaf 1)ارور:$(tput sgr 0) ورودی یک عدد معتبر نیست"
 		exit 1
 	fi
 	if [ "$PORT" -gt 65535 ]; then
-		echo "$(tput setaf 1)Error:$(tput sgr 0): Number must be less than 65536"
+		echo "$(tput setaf 1)ارور:$(tput sgr 0)عدد باید کمتر از 65536 باشد"
 		exit 1
 	fi
 	while true; do
 		echo "آیا می خواهید سکرت کد را به صورت دستی تنظیم کنید یا تصادفی ایجاد کنم؟"
 		echo "   1) سکرت کد را به صورت دستی وارد کنید"
-		echo "   2) سکرت کد را تصادفی ایجاد میکنم"
+		echo "   2) سکرت کد را تصادفی ایجاد بکن برام"
 		read -r -p "لطفا یکی را انتخاب کنید [1-2]: " -e -i 2 OPTION
 		case $OPTION in
 		1)
@@ -520,22 +520,22 @@ cd MTProxy || exit 2
 make            #Build the proxy
 BUILD_STATUS=$? #Check if build was successful
 if [ $BUILD_STATUS -ne 0 ]; then
-	echo "$(tput setaf 1)Error:$(tput sgr 0) Build failed with exit code $BUILD_STATUS"
-	echo "Deleting the project files..."
+	echo "$(tput setaf 1)ارور:$(tput sgr 0) ساخت با کد خروج ناموفق بود $BUILD_STATUS"
+	echo "حذف فایل های پروژه..."
 	rm -rf /opt/MTProxy
-	echo "Done"
+	echo "انجام شد:)"
 	exit 3
 fi
 cd objs/bin || exit 2
 curl -s https://core.telegram.org/getProxySecret -o proxy-secret
 STATUS_SECRET=$?
 if [ $STATUS_SECRET -ne 0 ]; then
-	echo "$(tput setaf 1)Error:$(tput sgr 0) Cannot download proxy-secret from Telegram servers."
+	echo "$(tput setaf 1)ارور:$(tput sgr 0)نمی توان پروکسی-مخفی را از سرورهای تلگرام دانلود کرد."
 fi
 curl -s https://core.telegram.org/getProxyConfig -o proxy-multi.conf
 STATUS_SECRET=$?
 if [ $STATUS_SECRET -ne 0 ]; then
-	echo "$(tput setaf 1)Error:$(tput sgr 0) Cannot download proxy-multi.conf from Telegram servers."
+	echo "$(tput setaf 1)ارور:$(tput sgr 0) نمی توان proxy-multi.conf را از سرورهای تلگرام دانلود کرد."
 fi
 #Setup mtconfig.conf
 echo "PORT=$PORT" >mtconfig.conf
@@ -548,7 +548,7 @@ echo "HAVE_NAT=\"$HAVE_NAT\"" >>mtconfig.conf
 echo "PUBLIC_IP=\"$PUBLIC_IP\"" >>mtconfig.conf
 echo "PRIVATE_IP=\"$PRIVATE_IP\"" >>mtconfig.conf
 #Setup firewall
-echo "Setting firewalld rules"
+echo "تنظیم قوانین فایروال"
 if [[ $distro =~ "CentOS" ]]; then
 	SETFIREWALL=true
 	if ! yum -q list installed firewalld &>/dev/null; then
@@ -620,7 +620,7 @@ systemctl start MTProxy
 systemctl is-active --quiet MTProxy #Check if service is active
 SERVICE_STATUS=$?
 if [ $SERVICE_STATUS -ne 0 ]; then
-	echo "$(tput setaf 3)Warning: $(tput sgr 0)Building looks successful but the sevice is not running."
+	echo "$(tput setaf 3)اخطار: $(tput sgr 0)به نظر میرسد پروکسی ساخته شده است ولی متاسفانه فعال نیست."
 	echo "Check status with \"systemctl status MTProxy\""
 fi
 systemctl enable MTProxy
