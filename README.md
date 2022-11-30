@@ -28,4 +28,4 @@
  می تواند بیش از 10000 نفر را روی یک CPU مدرن انجام دهد. قدرت cpu بین افراد متصل تقسیم خواهد شد. افراد را بیشتر از تعداد رشته های CPU خود تولید نکنید چرا که ممکنه سرور شما از دسترس خارج شود.
 به طور مثال یک سرور که cpu 2 هسته ای هست حدودا 20000 نفر را میتواند وصل نگه دارد!!!
 ##
-Thanks to <a href="https://github.com/HirbodBehnam" target="_blank"> HirbodBehnam </a> creator of the Proxy you can now install the proxy with a script.
+Thanks to <a href="https://github.com/HirbodBehnam" target="_blank"> HirbodBehnam </a> and <a href="https://github.com/TelegramMessenger/MTProxy" target="_blank"> MTProxy Admin Bot </a> creator of the Proxy you can now install the proxy with a script.
