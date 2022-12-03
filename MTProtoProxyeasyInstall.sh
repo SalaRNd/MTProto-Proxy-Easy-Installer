@@ -318,9 +318,10 @@ if [ -d "/opt/MTProxy" ]; then
 		;;
 	# About
 	10)
-		echo "اسکریپت MTProto Proxy Easy Installer توسط SalaRNd فارسی سازی و ساده سازی شده است"
+		echo "فارسی سازی و توسعه داده شده توسط SalaRNd"
 		echo "منبع در https://github.com/TelegramMessenger/MTProxy"
 		echo "مخزن اسکریپت Github: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
+		echo "میتونید با ارز دیجیتال از اینجا یک سرور مجازی تهیه کنید https://bit.ly/VPS-SalaRNd"
 		;;
 	esac
 	exit
@@ -386,12 +387,12 @@ else
 	SECRET=""
 	TAG=""
 	echo "به نصب کننده آسان MTProto-Proxy خوش آمدید!"
-	echo "فارسی سازی شده و ساده سازی شده توسط SalaRNd"
+	echo "فارسی سازی و توسعه داده شده توسط SalaRNd"
 	echo "من mtprotoproxy، را از مخزن رسمی نصب خواهم کرد"
 	echo "منبع در https://github.com/TelegramMessenger/MTProxy و https://github.com/krepver/MTProxy"
 	echo "مخزن اسکریپت Github: https://github.com/SalaRNd/MTPoto-Proxy-Easy-Installer"
+	echo "میتونید با ارز دیجیتال از اینجا یک سرور مجازی تهیه کنید https://bit.ly/VPS-SalaRNd"
 	echo "حالا اطلاعاتی از شما جمع آوری میکنم..."
-	echo ""
 	echo ""
 	#Proxy Port
 	read -r -p "یک پورت را برای پروکسی انتخاب کنید (-1 برای تصادفی کردن): " -e -i "-1" PORT
