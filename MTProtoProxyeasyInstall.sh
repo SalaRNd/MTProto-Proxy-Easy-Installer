@@ -453,7 +453,7 @@ else
 		esac
 	done
 	#Now setup the tag
-	read -r -p "آیا می خواهید پروکسی خود را اسپانسری کنید؟ (y/n) " -e -i "y" OPTION
+	read -r -p "آیا می خواهید پروکسی خود را اسپانسری کنید؟ (y/n) " -e -i "n" OPTION
 	if [[ "$OPTION" == "y" || "$OPTION" == "Y" ]]; then
 		echo "$(tput setaf 1)توجه داشته باشید:$(tput sgr 0) کاربران و مدیران عضو کانال، کانال اسپانسری را در بالای صفحه نمی بینند."
 		echo "در تلگرام به @MTProxybot Bot رفته و IP و $PORT این سرور را به عنوان پورت وارد کنید. سپس به عنوان سکرت کد $SECRET را وارد کنید"
