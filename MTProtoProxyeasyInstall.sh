@@ -478,7 +478,7 @@ else
 	#Secret and config updater
 	read -r -p "آیا می خواهید به روز رسانی پیکربندی خودکار را فعال کنید؟ من \"proxy-secret\" و \"proxy-multi.conf\" را هر روز در نیمه شب (12:00 صبح) به روز می کنم. توصیه می کنم این را فعال کنید.[y/n] " -e -i "y" ENABLE_UPDATER
 	#Change host mask
-	read -r -p "آدرس را انتخاب کنید که فکر می کند در حال بازدید از آن هستید. برای غیرفعال کردن Fake-TLS یک رشته خالی ارسال کنید. فعال کردن این گزینه به طور خودکار اسرار 'dd' را غیرفعال می کند (توصیه میشود یک URL دلخواه وارد کنید): " -e -i "s10.nadbeatpro.ml" TLS_DOMAIN
+	read -r -p "آدرس را انتخاب کنید که فکر می کند در حال بازدید از آن هستید. برای غیرفعال کردن Fake-TLS یک رشته خالی ارسال کنید. فعال کردن این گزینه به طور خودکار اسرار 'dd' را غیرفعال می کند (توصیه میشود یک URL دلخواه وارد کنید): " -e -i "s10.nadbeatpro.ir" TLS_DOMAIN
 	#Use nat status for proxies behind NAT
 	#Try to autodetect private ip: https://github.com/angristan/openvpn-install/blob/master/openvpn-install.sh#L230
 	IP=$(ip -4 addr | sed -ne 's|^.* inet \([^/]*\)/.* scope global.*$|\1|p' | head -1)
@@ -531,7 +531,7 @@ cd objs/bin || exit 2
 curl -s https://core.telegram.org/getProxySecret -o proxy-secret
 STATUS_SECRET=$?
 if [ $STATUS_SECRET -ne 0 ]; then
-	echo "$(tput setaf 1)ارور:$(tput sgr 0)نمی توان پروکسی-مخفی را از سرورهای تلگرام دانلود کرد."
+	echo "$(tput setaf 1)ارور:$(tput sgr 0)نمی توان پروکسی مخفی را از سرورهای تلگرام دانلود کرد."
 fi
 curl -s https://core.telegram.org/getProxyConfig -o proxy-multi.conf
 STATUS_SECRET=$?
