@@ -1,7 +1,6 @@
 # نصب کننده آسان MTProtoProxy
 <h4>یک اسکریپت بدون باگ برای نصب MTProtoProxy بر روی Centos یا Ubuntu</h4>
 
-میتوانید از <a href="https://support.cloudzy.com/aff.php?aff=1557" target="_blank">اینجا سرور مجازی  (VPS) با ارز دیجیتال</a> بخرید. (با فیلتر شکن وارد لینک شوید)
 
  نرم افزار <a href="https://uploadb.me/direct/cjlbd3c6vuwm/CC_%208.0l.rar.html" target="_blank"> PUTTY </a> را دانلود کنید
 
